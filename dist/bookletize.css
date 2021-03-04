@@ -1,0 +1,40 @@
+/* https://github.com/theleagueof/league-spartan */
+@font-face {
+  font-family: 'League Spartan';
+    src: url('https://cdn.jsdelivr.net/npm/fontsource-league-spartan@3/files/league-spartan-latin-600-normal.woff2') format('woff2'),
+         url('https://cdn.jsdelivr.net/npm/fontsource-league-spartan@3/files/league-spartan-latin-600-normal.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'League Spartan';
+}
+
+header {
+  margin: 80px 50px;
+}
+
+.dropzone {
+  padding: 30px;
+  margin: 0 20% 30px;
+  border: 4px dashed #ccc;
+  border-radius: 8px;
+  text-align: center;
+  color: #444;
+}
+
+.dropzone input {
+  max-width: 100%;
+}
+
+.hover {
+  background: #eee;
+}
+
+iframe {
+  width: 100%;
+  border: 0;
+  height: 800px;
+  background: #aaa;
+}

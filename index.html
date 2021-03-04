@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:title" content="Bookletize.js" />
+    <meta property="og:description" content="Reformat PDFs into booklets in 4,1,2,3 or 8,1,2,7/6,3,4,5 format in JavaScript."/>
+
+    <title>Bookletize.js</title>
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    
+    <script src="node_modules/pdf-lib/dist/pdf-lib.min.js"></script>
+    <script src="dist/bookletize.js"></script>
+
+    <link rel="stylesheet" href="dist/bookletize.css">
+
+  </head>
+
+  <body>
+
+    <header>
+      <center><h1>Bookletize.js</h1></center>
+    </header>
+
+    <div id="dropzone" class="dropzone">
+      <p id="dropzone-text">
+        <i>Select or drag in a PDF</i>
+      </p>
+      <center>
+	<input type="file" id="fileInput" value="" accept="application/pdf"><br />
+      </center>
+    </div>
+
+    <iframe id="pdf"></iframe>
+
+    <script>
+      (function() {
+
+        setup();
+
+      })();
+    </script>
+  </body>
+</html>
+
