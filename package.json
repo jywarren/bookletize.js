@@ -19,10 +19,11 @@
     "booklet"
   ],
   "dependencies": {
-    "bootstrap": "~3.4.0",
-    "font-awesome": "~4.7.0",
+    "bootstrap": "^3.4.1",
+    "font-awesome": "^4.7.0",
     "jquery": "^3.6.0",
-    "pdf-lib": "^1.16.0"
+    "pdf-lib": "^1.16.0",
+    "pdfobject": "^2.2.4"
   },
   "devDependencies": {
     "http-server": "^0.12.3"

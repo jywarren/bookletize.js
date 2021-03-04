@@ -32,7 +32,7 @@ header {
   background: #eee;
 }
 
-iframe {
+#pdf {
   width: 100%;
   border: 0;
   height: 800px;

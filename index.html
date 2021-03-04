@@ -11,8 +11,10 @@
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link href="node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     
     <script src="node_modules/pdf-lib/dist/pdf-lib.min.js"></script>
+    <script src="node_modules/pdfobject/pdfobject.js"></script>
     <script src="dist/bookletize.js"></script>
 
     <link rel="stylesheet" href="dist/bookletize.css">
@@ -22,7 +24,11 @@
   <body>
 
     <header>
-      <center><h1>Bookletize.js</h1></center>
+      <center>
+        <h1><i class="fa fa-file-pdf-o"></i></h1>
+        <h1>Bookletize.js</h1>
+	<p style="width:50%;">Reformat PDFs into booklets in 4,1,2,3 or 8,1,2,7/6,3,4,5 format in JavaScript for making bound paper booklets. Print the resulting PDF, fold in half and staple to form a booklet. <br /> <a href="https://github.com/jywarren/bookletize.js">Open Source</a> by <a href="https://unterbahn.com">Jeffrey Yoo Warren</a></p>
+      </center>
     </header>
 
     <div id="dropzone" class="dropzone">
@@ -30,11 +36,14 @@
         <i>Select or drag in a PDF</i>
       </p>
       <center>
+        <i class="hidden fa fa-spin fa-circle-o-notch"></i>
 	<input type="file" id="fileInput" value="" accept="application/pdf"><br />
       </center>
     </div>
 
-    <iframe id="pdf"></iframe>
+    <center><h3></h3></center>
+
+    <div id="pdf"></div>
 
     <script>
       (function() {

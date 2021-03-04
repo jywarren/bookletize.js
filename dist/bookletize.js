@@ -1,4 +1,4 @@
-
+const { PDFDocument, StandardFonts, rgb } = PDFLib
 
 async function createPdf(existingPdfBytes) {
   const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
@@ -14,10 +14,12 @@ async function createPdf(existingPdfBytes) {
     let page = pdfDoc.addPage([width, height]);
     pageCount = await pdfDoc.getPageCount();
     page.moveTo(width/2, height/2);
-    page.drawText("Page " + pageCount);
+    page.drawText("Page " + pageCount, {
+      size: 7,
+      color: rgb(0.2,0.2,0.2)
+    });
   }
   console.log(pageCount, "pages padded to multiple of 4");
-  const pdfBytes = await pdfDoc.save();
   const origPages = await pdfDoc.getPages();
   console.log(origPages);
   var pageNum = 0;
@@ -56,8 +58,14 @@ async function createPdf(existingPdfBytes) {
   }
 
   console.log('completed assembling sheets');
-  const pdfDataUri = await bookletDoc.saveAsBase64({ dataUri: true });
-  document.getElementById('pdf').src = pdfDataUri;
+  $('.fa-spin').addClass('hidden');
+//  const pdfDataUri = await bookletDoc.saveAsBase64({ dataUri: true });
+//  document.getElementById('pdf').src = pdfDataUri;
+  const pdfBytes = await bookletDoc.save();
+  var blob = new Blob([pdfBytes], {type: "application/pdf"});
+  var link = window.URL.createObjectURL(blob);
+
+  PDFObject.embed(link, "#pdf" );
 
 }
 
@@ -67,9 +75,11 @@ function setup() {
 
   function handleFile(e) {
 
+    $('.fa-spin').removeClass('hidden');
+
     e.preventDefault();
     e.stopPropagation(); // stops the browser from redirecting.
-console.log('reader ', e.target.files);
+    console.log('filereader ', e, e.target.files);
 
     if (e.target && e.target.files) var file = e.target.files[0];
     else var file = e.dataTransfer.files[0];
@@ -85,7 +95,9 @@ console.log('reader ', e.target.files);
   
   }
 
-  $('#fileInput,.dropzone')[0].addEventListener('drop', handleFile, false);
+  $('.dropzone')[0].addEventListener('drop', handleFile, false);
+  $('#fileInput').on('change', handleFile);
+
 
   var dropzone = $('.dropzone');
   dropzone.on('dragover', function onDragover(e) {
