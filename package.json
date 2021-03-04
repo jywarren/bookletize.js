@@ -1,7 +1,7 @@
 {
   "name": "bookletize.js",
   "description": "Reformat PDFs into booklets in 4,1,2,3 or 8,1,2,7/6,3,4,5 format in JavaScript.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {},
   "author": {
     "name": "Jeffrey Yoo Warren",
