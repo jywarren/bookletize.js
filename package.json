@@ -1,7 +1,7 @@
 {
   "name": "bookletize.js",
   "description": "Reformat PDFs into booklets in 4,1,2,3 or 8,1,2,7/6,3,4,5 format in JavaScript.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {},
   "author": {
     "name": "Jeffrey Yoo Warren",
@@ -19,10 +19,11 @@
     "booklet"
   ],
   "dependencies": {
-    "bootstrap": "~3.4.0",
-    "font-awesome": "~4.7.0",
+    "bootstrap": "^3.4.1",
+    "font-awesome": "^4.7.0",
     "jquery": "^3.6.0",
-    "pdf-lib": "^1.16.0"
+    "pdf-lib": "^1.16.0",
+    "pdfobject": "^2.2.4"
   },
   "devDependencies": {
     "http-server": "^0.12.3"
