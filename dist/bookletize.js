@@ -16,7 +16,7 @@ async function createPdf(existingPdfBytes) {
     page.moveTo(width/2, height/2);
     page.drawText("Page " + pageCount, {
       size: 7,
-      color: rgb(0.2,0.2,0.2)
+      color: rgb(1,1,1)
     });
   }
   console.log(pageCount, "pages padded to multiple of 4");
@@ -96,7 +96,7 @@ function setup() {
   }
 
   $('.dropzone')[0].addEventListener('drop', handleFile, false);
-  $('#fileInput').on('change', handleFile);
+  $('#fileInput').on('change drop', handleFile);
 
 
   var dropzone = $('.dropzone');
