@@ -7,6 +7,3 @@ Demo: https://jywarren.github.io/bookletize.js
 
 NPM: http://npmjs.com/package/bookletize.js
 
-Gets stuck on big PDFs for now?
-
-
