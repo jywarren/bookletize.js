@@ -1,9 +1,10 @@
 const { PDFDocument, StandardFonts, rgb } = PDFLib
 
-async function createPdf(existingPdfBytes) {
+async function createPdf(existingPdfBytes, options) {
   const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
   const bookletDoc = await PDFLib.PDFDocument.create();
 
+  options = options || {};
   const { width, height } = await pdfDoc.getPages()[0].getSize();
 
   var pageCount = await pdfDoc.getPageCount();
@@ -30,29 +31,27 @@ async function createPdf(existingPdfBytes) {
     // double width, same height:
     const bookletPage = bookletDoc.addPage([width * 2, height]);
 
-    if (origPages.length > 0) {
-      var embeddedPage = await bookletDoc.embedPage(origPages.splice(origPages.length-2,1)[0]);
-      bookletPage.drawPage(embeddedPage, {x: 0, y: 0});
+    // this function can be configured in options, and is what fetches the "next" page from the original stack (and removes it)
+    let getPage = options.getPage || async function getPage(originalPosition, placement, originalPages, _bookletDoc, _bookletPage) {
+      if (originalPages.length > 0) {
+        var embeddedPage = await _bookletDoc.embedPage(originalPages.splice(originalPosition,1)[0]);
+        _bookletPage.drawPage(embeddedPage, placement);
+      }
     }
 
+    await getPage(origPages.length-1,{x: 0, y: 0}, origPages, bookletDoc, bookletPage)
     pageNum += 1;
-    if (origPages.length > 0) {
-      var embeddedPage2 = await bookletDoc.embedPage(origPages.splice(0,1)[0]);
-      bookletPage.drawPage(embeddedPage2, {x: width, y: 0});
-    }
+
+    await getPage(0,{x: width, y: 0}, origPages, bookletDoc, bookletPage)
+    pageNum += 1;
 
     const bookletPage2 = bookletDoc.addPage([width * 2, height]);
-    pageNum += 1;
-    if (origPages.length > 0) {
-      var embeddedPage3 = await bookletDoc.embedPage(origPages.splice(0,1)[0]);
-      bookletPage2.drawPage(embeddedPage3, {x: 0, y: 0});
-    }
 
+    await getPage(0,{x: 0, y: 0}, origPages, bookletDoc, bookletPage2)
     pageNum += 1;
-    if (origPages.length > 0) {
-      var embeddedPage4 = await bookletDoc.embedPage(origPages.splice(origPages.length-2,1)[0]);
-      bookletPage2.drawPage(embeddedPage4, {x: width, y: 0});
-    }
+
+    await getPage(origPages.length-1,{x: width, y: 0}, origPages, bookletDoc, bookletPage2)
+    pageNum += 1;
 
     console.log('added sheet', sheet);
   }
