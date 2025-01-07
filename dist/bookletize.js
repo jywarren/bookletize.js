@@ -28,9 +28,6 @@ async function createPdf(existingPdfBytes, options) {
   // iterate through, plucking out 4 pages at a time and inserting into new sheet
   for (var sheet = 0; sheet < pageCount / 4; sheet++) {
 
-    // double width, same height:
-    const bookletPage = bookletDoc.addPage([width * 2, height]);
-
     // this function can be configured in options, and is what fetches the "next" page from the original stack (and removes it)
     let getPage = options.getPage || async function getPage(originalPosition, placement, originalPages, _bookletDoc, _bookletPage) {
       if (originalPages.length > 0) {
@@ -39,19 +36,37 @@ async function createPdf(existingPdfBytes, options) {
       }
     }
 
-    await getPage(origPages.length-1,{x: 0, y: 0}, origPages, bookletDoc, bookletPage)
-    pageNum += 1;
-
-    await getPage(0,{x: width, y: 0}, origPages, bookletDoc, bookletPage)
-    pageNum += 1;
-
+    // double width, same height:
+    const bookletPage = bookletDoc.addPage([width * 2, height]);
     const bookletPage2 = bookletDoc.addPage([width * 2, height]);
 
-    await getPage(0,{x: 0, y: 0}, origPages, bookletDoc, bookletPage2)
-    pageNum += 1;
+    if (options.saddleStitch){
+      await getPage(origPages.length-1,{x: 0, y: 0}, origPages, bookletDoc, bookletPage)
+      pageNum += 1;
 
-    await getPage(origPages.length-1,{x: width, y: 0}, origPages, bookletDoc, bookletPage2)
-    pageNum += 1;
+      await getPage(0,{x: width, y: 0}, origPages, bookletDoc, bookletPage)
+      pageNum += 1;
+
+      await getPage(0,{x: 0, y: 0}, origPages, bookletDoc, bookletPage2)
+      pageNum += 1;
+
+      await getPage(origPages.length-1,{x: width, y: 0}, origPages, bookletDoc, bookletPage2)
+      pageNum += 1;
+
+    } else {
+      await getPage(3,{x: 0, y: 0}, origPages, bookletDoc, bookletPage)
+      pageNum += 1;
+
+      await getPage(0,{x: width, y: 0}, origPages, bookletDoc, bookletPage)
+      pageNum += 1;
+
+      await getPage(0,{x: 0, y: 0}, origPages, bookletDoc, bookletPage2)
+      pageNum += 1;
+
+      await getPage(0,{x: width, y: 0}, origPages, bookletDoc, bookletPage2)
+      pageNum += 1;
+
+    }
 
     console.log('added sheet', sheet);
   }
@@ -87,7 +102,7 @@ function setup() {
     var reader = new FileReader();
 
     reader.onload = () => {
-      createPdf(reader.result);
+      createPdf(reader.result, { saddleStitch: $('#saddleStitch')[0].checked });
     };
 
     reader.readAsArrayBuffer(file);
