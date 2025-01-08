@@ -1,7 +1,7 @@
 Bookletize.js
 ========
 
-Reformat PDFs into booklets in 4,1,2,3 or 8,1,2,7/6,3,4,5 format in JavaScript for making bound paper booklets.
+JavaScript widget that reformats PDFs into signatures for making bound paper booklets. Print the resulting PDF, fold the stack in half and staple along the spine to form a **saddle stitch booklet**, or fold and stack sheets individually then glue the spine for a **perfect binding**.
 
 Demo: https://jywarren.github.io/bookletize.js
 
